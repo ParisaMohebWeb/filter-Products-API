@@ -1,19 +1,35 @@
 /* https://fakestoreapi.com/products */
+const allProduct = document.querySelector('.product')
 
+function getProduct() {
 
-const newDiv = document.createElement('div')
-console.log(newDiv)
+    fetch("https://fakestoreapi.com/products")
+        .then((res) => {
+            return res.json()
+            console.log(newDiv)
 
-newDiv.innerHTML = `
+        })
 
-    <img src="img/1.jpg" alt="">
-    <p>Lorem ipsum dolor sit amet consectetu</p>
-    <span>$ 99.55</span>       
+        .then((res) => {
 
-`
-const productAll = document.querySelector('.product')
+            res.forEach((item) => {
 
-productAll.append(newDiv)
+                const newDiv = document.createElement("div")
+                
+                newDiv.innerHTML = `
+                  <img src="${ item.image }" alt="">
+                  <h3> ${item.title } </h3>
+                  <span>${ item.price }</span>            `
+
+                allProduct.append(newDiv)
+
+            })
+
+        })
+
+}
+getProduct()
+
 
 
 
