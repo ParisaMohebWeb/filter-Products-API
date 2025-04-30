@@ -16,18 +16,8 @@ function getProduct() {
         .then((res) => {
             loaderPro.style.display = 'none'
 
-            res.map((item) => {
-
-                const newDiv = document.createElement("div")
-
-                newDiv.innerHTML = `
-                  <img src="${ item.image }" alt="">
-                  <h3> ${item.title } </h3>
-                  <span>${ item.price }</span>            `
-
-                allProduct.append(newDiv)
-
-            })
+            addToDom(res)
+          
             userSearch(res)
         })
 
@@ -37,8 +27,19 @@ function getProduct() {
         })
 
 }
-
 getProduct()
+
+function addToDom(list) {
+    list.map((item) => {
+
+        const newDiv = document.createElement("div")
+        newDiv.innerHTML = `
+          <img src="${ item.image }" alt="">
+          <h3> ${item.title } </h3>
+          <span>${ item.price }</span> `
+        allProduct.append(newDiv)
+    })
+}
 
 function userSearch(arrayProduct) {
 
@@ -51,19 +52,7 @@ function userSearch(arrayProduct) {
        })
 
        allProduct.innerHTML=''
-
-       filterProduct.map((item) => {
-
-        const newDiv = document.createElement("div")
-
-        newDiv.innerHTML = `
-          <img src="${ item.image }" alt="">
-          <h3> ${item.title } </h3>
-          <span>${ item.price }</span>            `
-
-        allProduct.append(newDiv)
-
-    })
+       addToDom(filterProduct)
     })
 }
 
