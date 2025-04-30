@@ -1,6 +1,7 @@
 /* https://fakestoreapi.com/products */
 const allProduct = document.querySelector('.product')
 const loaderPro = document.querySelector('.loader')
+const input = document.querySelector('header>input')
 
 function getProduct() {
 
@@ -9,13 +10,13 @@ function getProduct() {
             if (res.ok) {
                 return res.json()                
             }
-            Promise.reject
+            Promise.reject()
         })
 
         .then((res) => {
             loaderPro.style.display = 'none'
 
-            res.forEach((item) => {
+            res.map((item) => {
 
                 const newDiv = document.createElement("div")
 
@@ -27,7 +28,7 @@ function getProduct() {
                 allProduct.append(newDiv)
 
             })
-
+            userSearch(res)
         })
 
         .catch((error)=>{
@@ -36,8 +37,35 @@ function getProduct() {
         })
 
 }
+
 getProduct()
 
+function userSearch(arrayProduct) {
+
+    input.addEventListener('input',()=>{
+       let value = input.value.trim().toLowerCase()
+
+      let filterProduct = arrayProduct.filter((item)=>{
+
+        if(item.title.toLowerCase().includes(value) )return item
+       })
+
+       allProduct.innerHTML=''
+
+       filterProduct.map((item) => {
+
+        const newDiv = document.createElement("div")
+
+        newDiv.innerHTML = `
+          <img src="${ item.image }" alt="">
+          <h3> ${item.title } </h3>
+          <span>${ item.price }</span>            `
+
+        allProduct.append(newDiv)
+
+    })
+    })
+}
 
 
 
